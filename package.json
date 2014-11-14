@@ -1,5 +1,5 @@
 {
-  "name": "goecoordinate",
+  "name": "geocoordinate",
   "version": "0.0.1",
   "author": "Christian Kaatz <christian.kaatz@here.com>",
   "description": "Classes to work with geo coordinates and bounding boxes",
