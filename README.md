@@ -17,7 +17,7 @@ Installation
 Usage
 -----
 
-    var GeoCoordinate = require('geocoordinate');
+    var GeoCoordinate = require('geocoordinate').Coordinate;
     var brandenburgerTor = new GeoCoordinate([52.51626877497768, 13.377935641833488]);
 
 Methods
