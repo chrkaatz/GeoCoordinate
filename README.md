@@ -1,7 +1,7 @@
 GeoCoordinate
 =============
 
-[![NPM version](https://badge.fury.io/js/GeoCoordinate.svg)](http://badge.fury.io/js/GeoCoordinate)  [![Build Status](https://travis-ci.org/ckaatz-nokia/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-nokia/GeoCoordinate)
+[![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/ckaatz-nokia/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-nokia/GeoCoordinate)
 
 a utility Library to create and work with GeoCoordinates
 
