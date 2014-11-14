@@ -1,6 +1,6 @@
 {
   "name": "geocoordinate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Christian Kaatz <christian.kaatz@here.com>",
   "description": "Classes to work with geo coordinates and bounding boxes",
   "repository": "git://github.com/ckaatz-nokia/GeoCoordinate.git",
