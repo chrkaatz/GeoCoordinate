@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "nodeunit": "0.9.x"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
   }
 }
