@@ -8,6 +8,7 @@
   "scripts": {
     "test": "./node_modules/.bin/nodeunit test/"
   },
+  "license": "MIT",
   "dependencies": {
     "underscore": "1.7.x"
   },
