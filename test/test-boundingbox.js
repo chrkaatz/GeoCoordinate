@@ -89,7 +89,7 @@ module.exports = testCase({
 
         test.done();
     },
-    "test box conatining a point": function(test) {
+    "test box containing a point": function(test) {
         var bb = new GeoBoundingBox();
         bb.pushCoordinate(-1, 1);
         bb.pushCoordinate(2, 2);
@@ -99,6 +99,16 @@ module.exports = testCase({
         test.ok(bb.contains(-1,1), 'point should be withing the bbox');
         test.ok(bb.contains(2,2), 'point should be withing the bbox');
         test.ok(!bb.contains(-1.01,1), 'point should not be withing the bbox');
+
+        test.done();
+    },
+    "test box getting center": function(test) {
+        var bb = new GeoBoundingBox();
+        bb.pushCoordinate(-1, 1);
+        bb.pushCoordinate(2, 2);
+        test.ok(bb.centerLatitude() === 0.5, 'should get the correct latitude');
+        test.ok(bb.centerLongitude() === 1.5, 'should get the correct longitude');
+        test.deepEqual(bb.center(), { latitude: 0.5, longitude: 1.5 }, 'should get the proper center');
 
         test.done();
     }
