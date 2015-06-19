@@ -65,6 +65,9 @@ Usage
     bbox.centerLongitude();
     // 6.625345117335698
 
+    var containedBbox = new BoundingBox();
+    bbox.containCircle(containedBbox, 1000);
+
 Methods
 -------
 
@@ -84,6 +87,10 @@ Either an array like [latitude, longitude(, altitude)] or an object with those v
 * .pointAtDistance(distance, bearing): Returns a new Point based on the distance in meters and a given angle
 * .bearingRadTo(GeoCoordinate): Calculates the bearing from this coordinate to a given one in radians
 * .bearingTo(GeoCoordinate): Calculates the bearing from this coordinate to a given one in degree
+
+## BoundingBox methods
+
+* .containCircle(GeoCoordinate, radius): Generates a bounding box containing the circle defined by the centre and radius (in metres)
 
 Running Tests
 -------------

@@ -2,6 +2,7 @@
 
 
 var GeoBoundingBox = require("../lib/boundingbox");
+var GeoCoordinate = require("../lib/coordinate");
 var testCase = require('nodeunit').testCase;
 
 module.exports = testCase({
@@ -109,6 +110,16 @@ module.exports = testCase({
         test.ok(bb.centerLatitude() === 0.5, 'should get the correct latitude');
         test.ok(bb.centerLongitude() === 1.5, 'should get the correct longitude');
         test.deepEqual(bb.center(), { latitude: 0.5, longitude: 1.5 }, 'should get the proper center');
+
+        test.done();
+    },
+    "test box containing circle": function(test) {
+        var bb = new GeoBoundingBox();
+        var centrePoint = new GeoCoordinate(-1, 1);
+        bb.containCircle(centrePoint, 1000);
+        test.ok(bb.contains(centrePoint.pointAtDistance(250, 0)), 'should contain a point 250 metres from the centre');
+        test.ok(bb.contains(centrePoint.pointAtDistance(750, 180)), 'should contain a point 750 metres from the centre');
+        test.ok(false === bb.contains(centrePoint.pointAtDistance(1750, 180)), 'should not contain a point 1750 metres from the centre');
 
         test.done();
     }
