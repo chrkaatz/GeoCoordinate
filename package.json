@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "underscore": "1.7.x"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "nodeunit": "0.9.x"
