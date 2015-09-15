@@ -122,5 +122,46 @@ module.exports = testCase({
         test.ok(false === bb.contains(centrePoint.pointAtDistance(1750, 180)), 'should not contain a point 1750 metres from the centre');
 
         test.done();
+    },
+    "test box matrix 2x2": function(test) {
+        var bb = new GeoBoundingBox();
+        bb.pushCoordinate(0, 0);
+        bb.pushCoordinate(2, 2);
+        var boxes = bb.getMatrix(1);
+        test.ok(boxes.length === 4, 'should generate a box of 4');
+        test.done();
+    },
+    "test box matrix 4x4": function(test) {
+        var bb = new GeoBoundingBox();
+        bb.pushCoordinate(-1, -1);
+        bb.pushCoordinate(2, 2);
+        var boxes = bb.getMatrix(2);
+        var resBoxes = [];
+        boxes.forEach(function(box) {
+            if(box.length && box.length > 0) {
+                box.forEach(function(b) {
+                    if(!b.length) {
+                        resBoxes.push(b);
+                    }
+                });
+            } else {
+                resBoxes.push(box);
+            }
+        });
+        test.ok(resBoxes.length === 16, 'should generate a box of 4');
+        test.ok(boxes.length === 4, 'should generate a box of 4');
+
+        test.done();
+    },
+    "test box can store arbitrary data": function(test) {
+        var bb = new GeoBoundingBox();
+        bb.pushCoordinate(-1, -1);
+        bb.pushCoordinate(2, 2);
+        bb.setData("Prop", "is set");
+        test.deepEqual(bb.data, { "Prop": "is set" }, 'should contain data');
+        bb.removeData("Prop");
+        test.deepEqual(bb.data, {}, 'should not contain data');
+
+        test.done();
     }
 });
