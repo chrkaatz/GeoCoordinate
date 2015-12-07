@@ -1,7 +1,7 @@
 /*jshint evil: false, bitwise:false, strict: false, undef: true, white: false, plusplus:false, node:true */
 
 
-var GeoCoordinate = require("../lib/coordinate");
+var GeoCoordinate = require("../lib/index.js").GeoCoordinate;
 var testCase = require('nodeunit').testCase;
 
 var P1 = new GeoCoordinate([0, 0, 0]); //Do you know where this is? ;)

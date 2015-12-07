@@ -1,7 +1,7 @@
 GeoCoordinate
 =============
 
-[![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/ckaatz-nokia/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-nokia/GeoCoordinate)
+[![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/ckaatz-here/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-nokia/GeoCoordinate)
 
 a utility Library to create and work with GeoCoordinates
 
@@ -18,7 +18,7 @@ Usage
 -----
     
     /* working with geocoordinates */
-    var GeoCoordinate = require('geocoordinate').Coordinate;
+    var GeoCoordinate = require('geocoordinate').GeoCoordinate;
     var brandenburgerTor = new GeoCoordinate([52.51626877497768, 13.377935641833488]);
     
     // get coordinate 200 m to north
