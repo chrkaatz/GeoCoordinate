@@ -1,0 +1,18 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-eval": 0,
+    "no-bitwise": 0,
+    "strict": 2,
+    "no-undef": 2,
+    "no-plusplus": 0,
+    "prefer-const": 2,
+    "no-var": 2,
+    "one-var": ["error", "never"]
+  }
+}

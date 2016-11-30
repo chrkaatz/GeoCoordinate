@@ -6,15 +6,19 @@
   "repository": "git://github.com/ckaatz-here/GeoCoordinate.git",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nodeunit test/"
+    "test": "nodeunit test/",
+    "coverage": "istanbul cover nodeunit test/"
   },
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "lodash": "^4.17.2",
-    "nodeunit": "0.9.x"
+    "eslint": "^3.11.1",
+    "istanbul": "^0.4.5",
+    "nodeunit": "^0.10.2",
+    "random-seed": "^0.3.0"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4"
   }
 }
