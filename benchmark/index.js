@@ -10,6 +10,7 @@ const chunkedArray = _.chunk(jsonData, CHUNK_SIZE);
 const Coordinate = require('..').GeoCoordinate;
 const startTime = process.hrtime();
 
+let i = 0;
 (function go() {
     const data = chunkedArray.pop();
     const results = [];
