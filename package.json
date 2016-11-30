@@ -9,10 +9,9 @@
     "test": "./node_modules/.bin/nodeunit test/"
   },
   "license": "MIT",
-  "dependencies": {
-    "lodash": "^3.10.1"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "lodash": "^4.17.2",
     "nodeunit": "0.9.x"
   },
   "engines": {
