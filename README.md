@@ -32,10 +32,8 @@ brandenburgerTor.distanceTo(potsdamerPlatz); // 761.6555386291442
 
 const westminsterAbbay = new GeoCoordinate(51.499382976649365, -0.12724540716209276);
 
-brandenburgerTor.quickDistanceTo(westminsterAbbay);
-// TODO
-brandenburgerTor.preciseDistanceTo(westminsterAbbay);
-// TODO
+brandenburgerTor.quickDistanceTo(westminsterAbbay); // 932075.8108608712
+brandenburgerTor.preciseDistanceTo(westminsterAbbay); // 930681.893582993
 
 
 const oldBbox = new BoundingBox(); // Old way to instantiate BoundingBox, see below for more convenient method
@@ -54,15 +52,10 @@ newBbox.box();
 
 newBbox.contains(52.50947253231671, 13.37661188095808); // true
 
-bbox.centerLatitude();
+oldBbox.centerLatitude();
 // 52.00782587581352
-bbox.centerLongitude();
+oldBbox.centerLongitude();
 // 6.625345117335698
-
-
-var containedBbox = new BoundingBox();
-bbox.containCircle(containedBbox, 1000);
-// ??? TODO
 
 ```
 
