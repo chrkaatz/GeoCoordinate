@@ -1,98 +1,178 @@
-GeoCoordinate
-=============
+# GeoCoordinate
 
 [![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/ckaatz-here/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-here/GeoCoordinate)
 
 a utility Library to create and work with GeoCoordinates
 
-Description
------------
+## Description
+
 A tiny library to help you gettting things done with geospatial coordinates.
 
-Installation
-------------
+## Installation
 
-    $ npm install geocoordinate
+    npm install geocoordinate
 
-Usage
------
-    
-    /* working with geocoordinates */
-    var GeoCoordinate = require('geocoordinate').GeoCoordinate;
-    var brandenburgerTor = new GeoCoordinate([52.51626877497768, 13.377935641833488]);
-    
-    // get coordinate 200 m to north
-    var coord200mToNorth = brandenburgerTor.pointAtDistance(200, 0);
-    // { coordinate: [ 52.518067418189524, 13.377935641833488 ] }
+## Usage
 
-    // what is the distance between two points
-    var potsdamerPlatz = new GeoCoordinate({
-        latitude: 52.50947253231671, 
-        longitude: 13.37661188095808
-    });
-    brandenburgerTor.distanceTo(potsdamerPlatz);
-    // 761.6555386291442
+```javascript
+const {
+    GeoCoordinate,
+    BoundingBox
+} = require('geocoordinate');
 
-    // lets compare distance functions a bit more far away
-    var westminsterAbbay = new GeoCoordinate([51.499382976649365, -0.12724540716209276]);
-    brandenburgerTor.distanceTo(westminsterAbbay, true);
-    // 930681.893582993 m -> 930.681 km
-    brandenburgerTor.distance3DTo(westminsterAbbay);
-    // 932075.8108608712 m -> 932.075km
+const brandenburgerTor = new GeoCoordinate([52.51626877497768, 13.377935641833488]);
+const coord200mToNorth = brandenburgerTor.pointAtDistance(200, 0); // instance of GeoCoordinate: { coordinate: [ 52.518067418189524, 13.377935641833488 ] }
 
-    /* working with boundingboxes */
-    var BoundingBox = require('geocoordinate').BoundingBox;
-    var bbox = new BoundingBox();
-    bbox.pushCoordinate(52.51626877497768, 13.377935641833488);
-    bbox.pushCoordinate(51.499382976649365, -0.12724540716209276);
+const potsdamerPlatz = new GeoCoordinate({
+    latitude: 52.50947253231671,
+    longitude: 13.37661188095808
+});
+brandenburgerTor.distanceTo(potsdamerPlatz); // 761.6555386291442
+                                             // Distance in meters
 
-    bbox.box();
-    /* { 
-        topLeftLatitude: 52.51626877497768,
-        topLeftLongitude: -0.12724540716209276,
-        bottomRightLatitude: 51.499382976649365,
-        bottomRightLongitude: 13.377935641833488 
-    } */
+const westminsterAbbay = new GeoCoordinate(51.499382976649365, -0.12724540716209276);
 
-    bbox.contains(52.50947253231671, 13.37661188095808);
-    // true
+brandenburgerTor.quickDistanceTo(westminsterAbbay);
+// TODO
+brandenburgerTor.preciseDistanceTo(westminsterAbbay);
+// TODO
 
-    bbox.hasCoordinates();
-    // true
 
-    bbox.centerLatitude();
-    // 52.00782587581352
-    bbox.centerLongitude();
-    // 6.625345117335698
+const oldBbox = new BoundingBox(); // Old way to instantiate BoundingBox, see below for more convenient method
+bbox.pushCoordinate(52.51626877497768, 13.377935641833488);
+bbox.pushCoordinate(51.499382976649365, -0.12724540716209276);
 
-    var containedBbox = new BoundingBox();
-    bbox.containCircle(containedBbox, 1000);
+const newBbox = BoundingBox.fromCoordinates([52.51, 13.37], [51.49, -0.12])
 
-Methods
--------
+newBbox.box();
+/* {
+    topLeftLatitude: 52.51,
+    topLeftLongitude: -0.12,
+    bottomRightLatitude: 51.49,
+    bottomRightLongitude: 13.37
+} */
 
-## Constructor options
+newBbox.contains(52.50947253231671, 13.37661188095808); // true
 
-Either an array like [latitude, longitude(, altitude)] or an object with those values
+bbox.centerLatitude();
+// 52.00782587581352
+bbox.centerLongitude();
+// 6.625345117335698
 
-## Methods
 
-* .latitude(): Return the point's latitude in degrees
-* .longitude(): Return the point's longitude in degrees
-* .altitude(): Return the point's altitude in meters
-* .isSet(): returns whether the instance is properly instanciated
-* .sortArrayByReferencePoint(array): sorts an array related to your reference point
-* .distanceTo(GeoCoordinate(, force)): Calculate the distance to a given point, setting force, will calculate it faster but less accurate
-* .distance3DTo(GeoCoordinate): Calculates the 3d distance to a given point
-* .pointAtDistance(distance, bearing): Returns a new Point based on the distance in meters and a given angle
-* .bearingRadTo(GeoCoordinate): Calculates the bearing from this coordinate to a given one in radians
-* .bearingTo(GeoCoordinate): Calculates the bearing from this coordinate to a given one in degree
+var containedBbox = new BoundingBox();
+bbox.containCircle(containedBbox, 1000);
+// ??? TODO
 
-## BoundingBox methods
+```
 
-* .containCircle(GeoCoordinate, radius): Generates a bounding box containing the circle defined by the centre and radius (in metres)
+## API
 
-Running Tests
--------------
+### GeoCoordinate
 
-  $ npm test
+#### constructor
+Usage:
+
+```javascript
+
+new GeoCoordinate([1,1]);
+new GeoCoordinate(32, 17.4);
+new GeoCoordinate(62.1, 24.3, 70); // Altitude = 70m
+new GeoCoordinate({
+    latitude: 6,
+    longitude: 18
+});
+
+```
+
+#### .asArray()
+
+Returns array `[latitude, longitude[, altitude]]`.
+
+#### .sortArrayByReferencePoint(arr)
+
+Sorts `arr` in place by distance to reference point.
+
+```javascript
+
+const potsdamerPlatz = new GeoCoordinate({
+    latitude: 52.50947253231671,
+    longitude: 13.37661188095808
+});
+
+const arr = [
+    [51, 23],
+    {latitude: 54, longitude: 16},
+    new GeoCoordinate(64, 32)
+];
+potsdamerPlatz.sortArrayByReferencePoint(arr);
+// arr is sorted now
+
+```
+
+#### .quickDistanceTo(point)
+
+Calculates quickly distance from `this` to `point`. Not recommended for long distances. Returns meters.
+
+#### .preciseDistanceTo(point)
+
+Calculates precise distance from `this` to `point`. Returns meters.
+
+#### .distance3DTo(point)
+
+Calculates a distance between two points, assuming they are on a plain area, correcting by actual latitude distortion.
+Will produce bad results for long distances (>>500km) and points very close to the poles.
+
+#### .pointAtDistance(distance, angle)
+
+Calculates the coordinate that is a given number of meters from this coordinate at the given angle
+*  @param {number} distance the distance in meters the new coordinate is way from this coordinate.
+*  @param {number} bearing the angle in degrees at which the new point will be from the old point. In radians, clockwise from north.
+*  @returns {GeoCoordinate} a new instance of this class with only the latitude and longitude set.
+
+#### .bearingRadTo(distance, angleInRadians)
+
+The same as `.pointAtDistance` but angle is given in radians.
+
+#### .latitude()
+
+Returns latitude of current point
+
+#### .longitude()
+
+Returns longitude of current point
+
+#### .altitude()
+
+Return altitude of the point or 0.
+
+### BoundingBox
+
+#### constructor
+
+Constructor doesn't take arguments.
+
+```javascript
+const bb = new BoundingBox();
+bb.pushCoordinate(52.51626877497768, 13.377935641833488);
+bb.pushCoordinate({latitude: 44, longitude: 6});
+```
+
+#### fromCoordinates
+
+```javascript
+const bbox = BoundingBox.fromCoordinates([32, 53], [33, 54]);
+```
+
+#### .contains(point)
+
+
+Checks if `point` is contained in bounding box.
+
+```javascript
+const bbox = BoundingBox.fromCoordinates([32, 53], [33, 54]);
+bbox.contains(new GeoCoordinate(23, 44));
+bbox.contains([32.5, 54.5]);
+```
+
+
