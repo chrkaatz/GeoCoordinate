@@ -13,10 +13,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^4.18.2",
+    "eslint": "^5.9.0",
     "istanbul": "^0.4.5",
-    "lodash": "^4.17.2",
-    "nodeunit": "^0.11.2",
+    "lodash": "^4.17.11",
+    "nodeunit": "^0.11.3",
     "random-seed": "^0.3.0"
   },
   "engines": {
