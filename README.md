@@ -1,6 +1,6 @@
 # GeoCoordinate
 
-[![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/ckaatz-here/GeoCoordinate.svg?branch=master)](https://travis-ci.org/ckaatz-here/GeoCoordinate)
+[![NPM version](https://badge.fury.io/js/geocoordinate.svg)](http://badge.fury.io/js/geocoordinate)  [![Build Status](https://travis-ci.org/chrkaatz/GeoCoordinate.svg?branch=master)](https://travis-ci.org/chrkaatz/GeoCoordinate)
 
 a utility Library to create and work with GeoCoordinates
 
