@@ -1,6 +1,6 @@
 {
   "name": "geocoordinate",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Christian Kaatz <christian.kaatz@here.com>",
   "description": "Classes to work with geo coordinates and bounding boxes",
   "repository": "git://github.com/chrkaatz/GeoCoordinate.git",
@@ -13,9 +13,9 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^5.9.0",
+    "eslint": "^6.4.0",
     "istanbul": "^0.4.5",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "nodeunit": "^0.11.3",
     "random-seed": "^0.3.0"
   },
