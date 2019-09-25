@@ -1,9 +1,11 @@
 {
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "globals": {},
+  "plugins": ["jest"],
   "extends": "eslint:recommended",
   "rules": {
     "no-eval": 0,

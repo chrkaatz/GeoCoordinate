@@ -1,21 +1,20 @@
-"use strict";
+'use strict';
 
-const GeoCoordinate = require("../lib/index.js").GeoCoordinate;
-const testCase = require("nodeunit").testCase;
+const GeoCoordinate = require('../lib/index.js').GeoCoordinate;
 
 const P1 = new GeoCoordinate([0, 0, 0]); //Do you know where this is? ;)
 const P2 = new GeoCoordinate([52.0, 13.0, 0]);
 
-function equalDecimal(test, value, expected, delta, message) {
+function equalDecimal(expect, value, expected, delta, message) {
   const equal = Math.abs(value - expected) <= delta;
-  test.ok(
-    equal,
+  expect(equal).toBe(
+    true,
     message +
-      ": actual value is not within epsilon |" +
+      ': actual value is not within epsilon |' +
       value +
-      "-" +
+      '-' +
       expected +
-      "|>" +
+      '|>' +
       delta
   );
 }
@@ -40,138 +39,148 @@ const goldDist = [
   [52.388053, 13.347313, 52.308504, 13.600255, 19332.97]
 ];
 // get reference calculation from http://www.movable-type.co.uk/scripts/latlong.html
-//
-module.exports = testCase({
-  "test distance implementations": function(test) {
+
+describe('GeoCoordinate', () => {
+  test('test distance implementations', () => {
     for (let i = 0; i < goldDist.length; i++) {
       const testData = goldDist[i];
       const p1 = new GeoCoordinate([testData[0], testData[1]]);
       const p2 = new GeoCoordinate([testData[2], testData[3]]);
       equalDecimal(
-        test,
+        expect,
         p1.distanceTo(p2),
         testData[4],
         testData[4] * 0.015,
-        "too big deviation (distanceTo)"
+        'too big deviation (distanceTo)'
       );
       equalDecimal(
-        test,
+        expect,
         p1.quickDistanceTo(p2),
         testData[4],
         testData[4] * 0.015,
-        "too big deviation (quickDistanceTo)"
+        'too big deviation (quickDistanceTo)'
       );
     }
-    test.done();
-  },
-  "test get bearing north": function(test) {
+  });
+  test('test get bearing north', () => {
     const north = new GeoCoordinate([3, 0, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(north),
       0,
       0,
-      "north direction should be 0°"
+      'north direction should be 0°'
     );
-    test.done();
-  },
-  "test get bearing northeast": function(test) {
+    equalDecimal(
+      expect,
+      P1.bearingTo([3, 0, 0]),
+      0,
+      0,
+      'north direction should be 0°'
+    );
+  });
+  test('test different distance calculations', () => {
+    const a = new GeoCoordinate([3, 0, 0]);
+    const b = new GeoCoordinate([173.7373737, -83.1272, 0]);
+    expect(a.preciseDistanceTo(b)).toEqual(10738778.34321367);
+    expect(a.quickDistanceTo(b)).toEqual(19003344.421636105);
+    expect(a.distanceTo([173.7373737, -83.1272, 0])).toEqual(10738778.34321367);
+  });
+  test('test 3d distance calculation', () => {
+    const a = new GeoCoordinate([3, 0, 1213]);
+    const b = new GeoCoordinate([173.7373737, -83.1272, 63]);
+    expect(a.distance3DTo(b)).toEqual(19003344.45643261);
+    expect(a.distance3DTo([173.7373737, -83.1272, 63])).toEqual(
+      19003344.45643261
+    );
+  });
+  test('test get bearing northeast', () => {
     const northeast = new GeoCoordinate([3, 3, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(northeast),
       degMinSecToDec(44, 57, 39),
       maxDelta,
-      "northeast not correctly calculated"
+      'northeast not correctly calculated'
     );
-    test.done();
-  },
-  "test get bearing east": function(test) {
+  });
+  test('test get bearing east', () => {
     const east = new GeoCoordinate([0, 120, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(east),
       degMinSecToDec(90, 0, 0),
       0,
-      "east not correctly calculated"
+      'east not correctly calculated'
     );
-    test.done();
-  },
-  "test get bearing southeast": function(test) {
+  });
+  test('test get bearing southeast', () => {
     const southeast = new GeoCoordinate([-10, 10, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(southeast),
       degMinSecToDec(135, 26, 19),
       maxDelta,
-      "southeast not correctly calculated"
+      'southeast not correctly calculated'
     );
-    test.done();
-  },
-  "test get bearing southwest": function(test) {
+  });
+  test('test get bearing southwest', () => {
     const southwest = new GeoCoordinate([-45, -13, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(southwest),
       degMinSecToDec(192, 40, 40),
       maxDelta,
-      "southwest not correctly calculated"
+      'southwest not correctly calculated'
     );
-    test.strictEqual(
-      P1.bearingRadTo(southwest),
+    expect(P1.bearingRadTo(southwest)).toEqual(
       3.3628605082691405,
-      "rad north should be calculated too"
+      'rad north should be calculated too'
     );
-    test.done();
-  },
-  "test get bearing almost north": function(test) {
+  });
+  test('test get bearing almost north', () => {
     const north = new GeoCoordinate([80, -0.2, 0]);
     equalDecimal(
-      test,
+      expect,
       P1.bearingTo(north),
       degMinSecToDec(359, 57, 53),
       maxDelta,
-      "almost north not correctly calculated"
+      'almost north not correctly calculated'
     );
-    test.strictEqual(
-      P1.bearingRadTo(north),
+    expect(P1.bearingRadTo(north)).toEqual(
       6.282569811232558,
-      "rad north should be calculated too"
+      'rad north should be calculated too'
     );
-    test.done();
-  },
-  "test get bearing almost north 2": function(test) {
+  });
+  test('test get bearing almost north 2', () => {
     const north = new GeoCoordinate([52.5, 13.0, 0]);
     equalDecimal(
-      test,
+      expect,
       P2.bearingTo(north),
       degMinSecToDec(0, 0, 0),
       maxDelta,
-      "almost north not correctly calculated"
+      'almost north not correctly calculated'
     );
-    test.strictEqual(
-      P2.bearingRadTo(north),
+    expect(P2.bearingRadTo(north)).toEqual(
       0,
-      "rad north should be calculated too"
+      'rad north should be calculated too'
     );
-    test.done();
-  },
-  "test get bearing northern hemisphers": function(test) {
+  });
+  test('test get bearing northern hemisphers', () => {
     const bagdad = new GeoCoordinate([35, 45, 120]);
     const osaka = new GeoCoordinate([35, 135, 200]);
     equalDecimal(
-      test,
+      expect,
       bagdad.bearingTo(osaka),
       degMinSecToDec(60, 9, 45),
       maxDelta,
-      "bagdad osaka not correctly calculated"
+      'bagdad osaka not correctly calculated'
     );
-    test.done();
-  },
-  "test get altitude": function(test) {
+  });
+  test('test get altitude', () => {
     const bagdad = new GeoCoordinate([35, 45, 120]);
     equalDecimal(
-      test,
+      expect,
       bagdad.altitude(),
       120,
       0,
@@ -179,81 +188,83 @@ module.exports = testCase({
     );
     const randomPoint = new GeoCoordinate([40, 24]);
     equalDecimal(
-      test,
+      expect,
       randomPoint.altitude(),
       0,
       0,
       "Default altitude isn't 0"
     );
-    test.done();
-  },
-  "test input as arguments": function(test) {
-    test.throws(function() {
+  });
+  test('test input as arguments', () => {
+    expect(() => {
       new GeoCoordinate(null, 2, 3);
-    });
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate(1);
-    });
-    test.doesNotThrow(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate(5, 6);
       new GeoCoordinate(7, 8, 9);
-    });
-    test.done();
-  },
-  "test input as array": function(test) {
-    test.throws(function() {
+    }).not.toThrow();
+  });
+  test('test input as array', () => {
+    expect(() => {
       new GeoCoordinate([1]);
-    });
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate([null, 1]);
-    });
-
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate([1, 2, null]);
-    });
-
-    test.doesNotThrow(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate([26, 42]);
-    });
-
-    test.done();
-  },
-  "test input as object": function(test) {
-    test.throws(function() {
+    }).not.toThrow();
+  });
+  test('test input as object', () => {
+    expect(() => {
       new GeoCoordinate({});
-    });
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate({
         latitude: 0
       });
-    });
-
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate({
         altitude: 0
       });
-    });
-    test.throws(function() {
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate({
-        latitude: "wow",
+        latitude: 'wow',
         altitude: 0
       });
-    });
-
-    test.doesNotThrow(function() {
+    }).toThrow();
+    expect(() => {
+      new GeoCoordinate({
+        latitude: 'string',
+        longitude: 9999999,
+        altitude: 0
+      });
+    }).toThrow();
+    expect(() => {
       new GeoCoordinate({
         latitude: 0,
         longitude: 0,
         altitude: 0
       });
-    });
-
-    test.done();
-  },
-  "test constructor usable as factory": function(test) {
-    test.doesNotThrow(function() {
+    }).not.toThrow();
+  });
+  test('test constructor usable as factory', () => {
+    expect(() => {
       GeoCoordinate(1, 1);
-    });
-    test.done();
-  }
+    }).not.toThrow();
+  });
+  test('sort array by referencePoint', () => {
+    const reference = new GeoCoordinate(0, 0);
+    expect(
+      reference.sortArrayByReferencePoint([[2, 2], [3, 1], [2, 1]])
+    ).toEqual([[2, 1], [2, 2], [3, 1]], 'should be sorted');
+  });
 });
