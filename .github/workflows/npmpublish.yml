@@ -26,14 +26,6 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - name: Bump Versions
-        uses: michmich112/version-bumper@master
-        with:
-          scheme: semantic
-          version-file: "./package.json"
-          files: "[]"
-          rules: '[{"trigger":"commit","bump":"build"}]'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
