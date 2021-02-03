@@ -18,7 +18,7 @@
     "eslint-plugin-jest": "22.21.0",
     "jest": "24.9.0",
     "jsdoc": "3.6.6",
-    "lodash": "4.17.19",
+    "lodash": "4.17.20",
     "minami": "1.2.3",
     "prettier": "1.18.2",
     "random-seed": "0.3.0"
