@@ -20,7 +20,7 @@
     "jsdoc": "3.6.6",
     "lodash": "4.17.21",
     "minami": "1.2.3",
-    "prettier": "2.2.1",
+    "prettier": "2.3.0",
     "random-seed": "0.3.0"
   },
   "engines": {
